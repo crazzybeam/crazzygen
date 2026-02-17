@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account System | Crazzy Beam</title>
+    <style>
+        :root {
+            --primary: #8a2be2;
+            --bg: #0d0516;
+            --glass: rgba(255, 255, 255, 0.05);
+            --neon: #bc13fe;
+            --text: #e0e0e0;
+        }
+
+        body {
+            margin: 0; font-family: 'Segoe UI', sans-serif;
+            background: var(--bg); color: var(--text);
+            min-height: 100vh; display: flex; flex-direction: column;
+        }
+
+        /* Navbar */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 5%; background: rgba(0,0,0,0.6); 
+            border-bottom: 2px solid var(--primary); backdrop-filter: blur(10px);
+        }
+
+        .logo { font-weight: bold; color: var(--neon); letter-spacing: 2px; font-size: 1.2rem; }
+        .admin-trigger { cursor: pointer; opacity: 0.3; font-size: 0.8rem; }
+
+        /* Container Central */
+        .main-container {
+            flex: 1; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; padding: 20px;
+        }
+
+        .glass-card {
+            background: var(--glass); backdrop-filter: blur(15px);
+            padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);
+            width: 100%; max-width: 450px; text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        input {
+            width: 100%; padding: 12px; margin: 10px 0;
+            background: rgba(0,0,0,0.4); border: 1px solid var(--primary);
+            color: white; border-radius: 8px; box-sizing: border-box; outline: none;
+        }
+
+        button {
+            width: 100%; padding: 14px; border: none; border-radius: 8px;
+            background: linear-gradient(45deg, var(--primary), var(--neon));
+            color: white; font-weight: bold; cursor: pointer;
+            text-transform: uppercase; transition: 0.3s;
+        }
+
+        button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4); }
+
+        /* Feed Fake */
+        .fake-feed {
+            margin-top: 25px; width: 100%; max-width: 400px;
+            background: rgba(0,0,0,0.2); border-radius: 10px;
+            padding: 10px; font-size: 0.85rem; overflow: hidden; height: 100px;
+        }
+
+        .feed-item {
+            display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .avatar-fake { width: 25px; height: 25px; background: #555; border-radius: 50%; }
+
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .hidden { display: none; }
+        .success-link { color: #00ff88; word-break: break-all; margin-top: 10px; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">ACCOUNT SYSTEM</div>
+    <div class="admin-trigger" onclick="toggleAdmin()">⚙️ ADM</div>
+</nav>
+
+<div class="main-container">
+    
+    <div id="panel-adm" class="glass-card hidden">
+        <h2 style="color: gold;">PAINEL ADMIN</h2>
+        <div id="adm-auth">
+            <input type="text" id="adm-user" placeholder="Usuário">
+            <input type="password" id="adm-pass" placeholder="Senha">
+            <button onclick="loginAdmin()">Entrar</button>
+        </div>
+        
+        <div id="adm-content" class="hidden">
+            <p>Gerar Novo Link de Membro</p>
+            <input type="text" id="input-disc" placeholder="Nome Discord do Membro">
+            <input type="text" id="input-roblox" placeholder="Link do Roblox">
+            <button onclick="gerarLinkMembro()">Gerar Link Único</button>
+            <div id="result-link" class="success-link"></div>
+        </div>
+    </div>
+
+    <div id="panel-gen" class="glass-card">
+        <h1 id="gen-title">GERADOR PRO</h1>
+        <p id="gen-desc">Iniciando sistema de validação automática...</p>
+        
+        <button onclick="redirectRoblox()" id="btn-main-gen">GEN CONTAS</button>
+
+        <div class="fake-feed" id="feed-container">
+            </div>
+    </div>
+
+</div>
+
+<script>
+    // --- CONFIGURAÇÃO ---
+    const ADM_USER = "CrazzyBeamers";
+    const ADM_PASS = "CrazzyBeamers";
+    
+    // Captura o link do Roblox da URL (Ex: site.com?rbx=https://...)
+    const urlParams = new URLSearchParams(window.location.search);
+    let robloxLink = urlParams.get('rbx') ? atob(urlParams.get('rbx')) : "https://www.roblox.com";
+    let nomeDono = urlParams.get('owner') ? atob(urlParams.get('owner')) : "Sistema";
+
+    // Ajusta o título conforme o dono do link
+    if(urlParams.get('owner')) {
+        document.getElementById('gen-title').innerText = "GERADOR DE " + nomeDono;
+    }
+
+    // --- FUNÇÕES ADM ---
+    function toggleAdmin() {
+        document.getElementById('panel-adm').classList.toggle('hidden');
+        document.getElementById('panel-gen').classList.toggle('hidden');
+    }
+
+    function loginAdmin() {
+        const u = document.getElementById('adm-user').value;
+        const p = document.getElementById('adm-pass').value;
+        if(u === ADM_USER && p === ADM_PASS) {
+            document.getElementById('adm-auth').classList.add('hidden');
+            document.getElementById('adm-content').classList.remove('hidden');
+        } else {
+            alert("Acesso Negado!");
+        }
+    }
+
+    function gerarLinkMembro() {
+        const disc = document.getElementById('input-disc').value;
+        const rbx = document.getElementById('input-roblox').value;
+        
+        if(!disc || !rbx) return alert("Preencha tudo!");
+
+        // Codifica os dados na URL para criar o link único
+        const base = window.location.href.split('?')[0];
+        const linkFinal = `${base}?owner=${btoa(disc)}&rbx=${btoa(rbx)}`;
+        
+        document.getElementById('result-link').innerHTML = `Link gerado para <b>${disc}</b>:<br>${linkFinal}`;
+    }
+
+    // --- FUNÇÕES GERADOR ---
+    function redirectRoblox() {
+        document.getElementById('btn-main-gen').innerText = "PROCESSANDO...";
+        setTimeout(() => {
+            window.location.href = robloxLink;
+        }, 1500);
+    }
+
+    // --- FEED FAKE ---
+    const nomesFakes = ["Dudu_v3", "SrNinguém", "LucasFPS", "CrazzyFan", "Kadu.rbx", "Xit_Lover", "Mel_Ofc"];
+    function addFakeActivity() {
+        const feed = document.getElementById('feed-container');
+        const nome = nomesFakes[Math.floor(Math.random() * nomesFakes.length)];
+        const item = document.createElement('div');
+        item.className = 'feed-item';
+        item.innerHTML = `
+            <div class="avatar-fake" style="background: hsl(${Math.random()*360}, 50%, 50%)"></div>
+            <span><b>${nome}</b> acabou de gerar uma conta rara!</span>
+        `;
+        
+        if(feed.children.length > 2) feed.removeChild(feed.firstChild);
+        feed.appendChild(item);
+    }
+
+    setInterval(addFakeActivity, 4000); // Adiciona um fake a cada 4 segundos
+    addFakeActivity(); 
+</script>
+
+</body>
+</html>

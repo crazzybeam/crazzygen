@@ -3,259 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doações Tik Tok | Oficial</title>
+    <title>AVISO IMPORTANTE | Morgan Beam</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+
     <style>
-        :root {
-            --primary-purple: #8a2be2;
-            --bg-dark: #0f051a;
-            --neon-purple: #bc13fe;
-            --glass-purple: rgba(138, 43, 226, 0.15);
-            --border-purple: rgba(188, 19, 254, 0.4);
+        :root { 
+            --accent-pink: #f472b6; 
+            --bg-dark: #070208; 
+            --card-bg: #15051a; 
+            --glow: rgba(244, 114, 182, 0.4); 
         }
 
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg-dark);
-            background-image: radial-gradient(circle at center, #2e0854 0%, #0f051a 100%);
-            color: #ffffff;
-            min-height: 100vh;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
 
-        nav {
+        body { 
+            background-color: var(--bg-dark); 
+            color: #fff; 
+            height: 100vh;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 15px 5%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(10px);
-            border-bottom: 2px solid var(--neon-purple);
+            justify-content: center;
+            overflow: hidden;
+            background-image: radial-gradient(circle at center, #2d052a 0%, #070208 100%);
         }
 
-        .logo { font-weight: 900; letter-spacing: 2px; text-shadow: 0 0 10px var(--neon-purple); }
-        .admin-trigger { cursor: pointer; opacity: 0.3; font-size: 0.8rem; color: var(--neon-purple); }
+        .notice-container {
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            padding: 40px;
+            background: var(--card-bg);
+            border: 2px solid var(--accent-pink);
+            border-radius: 30px;
+            box-shadow: 0 0 50px var(--glow);
+            animation: pulseIn 0.8s ease-out;
+        }
 
-        .main-container { max-width: 650px; margin: 30px auto; padding: 20px; }
-
-        .donation-card {
-            background: rgba(20, 10, 30, 0.8);
-            border: 1px solid var(--border-purple);
-            border-radius: 18px;
+        .icon-warning {
+            font-size: 4rem;
+            color: var(--accent-pink);
             margin-bottom: 20px;
-            overflow: hidden;
+            text-shadow: 0 0 15px var(--accent-pink);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent-pink);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #eee;
+            margin-bottom: 30px;
+        }
+
+        .discord-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 40px;
+            background: linear-gradient(45deg, #db2777, var(--accent-pink));
+            color: white;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.1rem;
+            border-radius: 50px; /* Arredondado */
             transition: 0.3s;
-            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(219, 39, 119, 0.3);
         }
 
-        .donation-card:hover { border-color: #fff; box-shadow: 0 0 25px var(--neon-purple); transform: scale(1.01); }
+        .discord-btn:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 15px 30px rgba(219, 39, 119, 0.5);
+            filter: brightness(1.1);
+        }
 
-        .card-header-gif {
+        .brand-footer {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 600;
+        }
+
+        @keyframes pulseIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Efeito de luz piscando no fundo */
+        .glow-bg {
+            position: absolute;
             width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-bottom: 1px solid var(--border-purple);
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+            background: radial-gradient(circle at 50% 50%, var(--accent-pink) 0%, transparent 70%);
+            animation: blink 4s infinite;
         }
 
-        .card-body { padding: 15px; }
-        .card-body h3 { margin: 0 0 8px 0; color: var(--neon-purple); text-transform: uppercase; font-size: 1.1rem; }
-        .card-body p { margin: 0; font-size: 0.85rem; color: #d1b3ff; line-height: 1.4; }
-
-        /* FEED DE RESGATES FALSO */
-        .fake-feed {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 15px;
-            border-radius: 12px;
-            height: 90px;
-            overflow: hidden;
-            border: 1px solid var(--border-purple);
-            margin-top: 20px;
+        @keyframes blink {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.3; }
         }
-        .feed-item { 
-            animation: fadeInUp 0.6s ease; 
-            margin-bottom: 8px; 
-            color: #e0b0ff; 
-            font-size: 0.85rem; 
-            border-left: 3px solid var(--neon-purple);
-            padding-left: 10px;
-        }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .glass-card {
-            background: var(--glass-purple);
-            padding: 25px;
-            border-radius: 20px;
-            border: 1px solid var(--border-purple);
-            margin-bottom: 25px;
-        }
-
-        input {
-            width: 100%; padding: 10px; margin: 8px 0;
-            background: rgba(0,0,0,0.5); border: 1px solid var(--neon-purple);
-            color: white; border-radius: 8px; box-sizing: border-box; outline: none;
-        }
-
-        button {
-            width: 100%; padding: 14px; border: none; border-radius: 8px;
-            background: linear-gradient(45deg, var(--primary-purple), var(--neon-purple));
-            color: white; font-weight: bold; cursor: pointer;
-        }
-
-        .hidden { display: none; }
-        #final-url { background: #000; padding: 10px; border-radius: 5px; color: #00ff88; font-size: 10px; word-break: break-all; margin-top: 10px; }
     </style>
 </head>
 <body>
 
-<nav>
-    <div class="logo">DOAÇÕES TIK TOK</div>
-    <div class="admin-trigger" onclick="toggleAdmin()">⚙️ ADM</div>
-</nav>
+    <div class="glow-bg"></div>
 
-<div class="main-container">
-
-    <div id="panel-adm" class="glass-card hidden">
-        <h2 style="text-align:center;">SISTEMA 7n</h2>
-        <div id="adm-auth">
-            <input type="text" id="adm-user" placeholder="Usuário">
-            <input type="password" id="adm-pass" placeholder="Senha">
-            <button onclick="loginAdmin()">Entrar</button>
-        </div>
+    <div class="notice-container">
+        <i class="fas fa-exclamation-triangle icon-warning"></i>
+        <h1>ATENÇÃO</h1>
+        <p>
+            Aviso A Todos Da Crazzy O Serve Vai Ser Deletado e Nos Estamos Nesse Discord, 
+            <br><strong>"Morgan Beam"</strong>
+            <br><br>
+            Nosso novo Discord oficial está abaixo:
+        </p>
         
-        <div id="adm-content" class="hidden">
-            <h3 style="color: var(--neon-purple);">Painel Crazzy Beam</h3>
-            <input type="text" id="membro-nome" placeholder="Nome do Membro">
-            <input type="text" id="link-gen" placeholder="Link Gen">
-            <input type="text" id="link-mm2" placeholder="Link MM2">
-            <input type="text" id="link-tsunami" placeholder="Link Tsunami">
-            <input type="text" id="link-brainrot" placeholder="Link Brainrot">
-            <input type="text" id="link-blox" placeholder="Link Blox Fruits">
-            <input type="text" id="link-robux" placeholder="Link Robux">
-            <button onclick="gerarLinkMultiplo()">GERAR LINK COMPLETO</button>
-            <div id="final-url"></div>
+        <a href="https://discord.gg/R5DKKHqDtz" target="_blank" class="discord-btn">
+            <i class="fab fa-discord"></i> ENTRAR NO NOVO DISCORD
+        </a>
+
+        <div class="brand-footer">
+            Morgan Beam &copy; 2024
         </div>
     </div>
-
-    <div id="panel-hub">
-        <h2 id="welcome-msg" style="text-align: center; margin-bottom: 10px;">🎁 Central de Doações</h2>
-        <p style="text-align: center; font-size: 0.8rem; color: #d1b3ff; margin-bottom: 25px;">Abaixo estão as doações ativas. Escolha uma categoria!</p>
-
-        <div class="donation-card" onclick="irPara('gen')">
-            <img src="https://i.imgur.com/wBBXouN.gif" class="card-header-gif">
-            <div class="card-body">
-                <h3>🪄 GEN CONTAS</h3>
-                <p>Gerador De Contas Raras, Façam Login Para Certificar-se!</p>
-            </div>
-        </div>
-
-        <div class="donation-card" onclick="irPara('mm2')">
-            <img src="https://i.imgur.com/wBBXouN.gif" class="card-header-gif">
-            <div class="card-body">
-                <h3>🗡️ MM2 (DOAÇÃO)</h3>
-                <p>Ganhe Facas Godly e muito mais. Entrega automática via bot!</p>
-            </div>
-        </div>
-
-        <div class="donation-card" onclick="irPara('tsunami')">
-            <img src="https://i.imgur.com/wBBXouN.gif" class="card-header-gif">
-            <div class="card-body">
-                <h3>🌪️ FUJA DO TSUNAMI</h3>
-                <p>Doamos Infinity, Divinos e Celestiais no nosso servidor privado!</p>
-            </div>
-        </div>
-
-        <div class="donation-card" onclick="irPara('brainrot')">
-            <img src="https://i.imgur.com/wBBXouN.gif" class="card-header-gif">
-            <div class="card-body">
-                <h3>🧠 BRAINROT TD</h3>
-                <p>Unidades Secretas e Farm de moedas liberados para membros!</p>
-            </div>
-        </div>
-
-        <div class="donation-card" onclick="irPara('blox')">
-            <img src="https://i.imgur.com/wBBXouN.gif" class="card-header-gif">
-            <div class="card-body">
-                <h3>🎃 BLOX FRUITS</h3>
-                <p>Frutas Perm, Gamepass e Frutas Físicas liberadas agora!</p>
-            </div>
-        </div>
-
-        <div class="donation-card" onclick="irPara('robux')">
-            <img src="https://i.imgur.com/wBBXouN.gif" class="card-header-gif">
-            <div class="card-body">
-                <h3>💎 ROBUX GRÁTIS</h3>
-                <p>Resgate pacotes de Robux diretamente na sua conta agora!</p>
-            </div>
-        </div>
-
-        <div class="fake-feed" id="feed-container"></div>
-    </div>
-</div>
-
-<script>
-    const ADM_USER = "CrazzyBeamers";
-    const ADM_PASS = "CrazzyBeamers";
-
-    const params = new URLSearchParams(window.location.search);
-    const links = {
-        gen: params.get('l1') ? atob(params.get('l1')) : "#",
-        mm2: params.get('l2') ? atob(params.get('l2')) : "#",
-        tsunami: params.get('l3') ? atob(params.get('l3')) : "#",
-        brainrot: params.get('l4') ? atob(params.get('l4')) : "#",
-        blox: params.get('l5') ? atob(params.get('l5')) : "#",
-        robux: params.get('l6') ? atob(params.get('l6')) : "#"
-    };
-
-    if(params.get('m')) {
-        document.getElementById('welcome-msg').innerText = "🎁 Doações de " + atob(params.get('m'));
-    }
-
-    // LISTA DE NOMES E RESGATES PARA O FEED
-    const nomes = ["user_roblox", "x_gamer_vibe", "vini_blox", "ana_kitsune", "luiz_godly", "pedro_adm", "felipe_fruits", "julia_rbx"];
-    const acoes = ["resgatou 1.000 Robux!", "recebeu uma Kitsune Perm!", "acabou de ganhar Set Godly!", "resgatou conta com Fruit Notifier!", "ganhou 5.000 Robux no Gen!", "ganhou uma Leopard Físicas!"];
-
-    function updateFeed() {
-        const container = document.getElementById('feed-container');
-        const item = document.createElement('div');
-        item.className = 'feed-item';
-        const nomeAleatorio = nomes[Math.floor(Math.random() * nomes.length)];
-        const acaoAleatoria = acoes[Math.floor(Math.random() * acoes.length)];
-        item.innerHTML = `✅ <b>${nomeAleatorio}</b> ${acaoAleatoria}`;
-        
-        if (container.children.length > 2) { container.removeChild(container.firstChild); }
-        container.appendChild(item);
-    }
-    setInterval(updateFeed, 3000);
-    updateFeed();
-
-    function irPara(id) {
-        if(links[id] === "#") return alert("Link não configurado!");
-        window.location.href = links[id];
-    }
-
-    function toggleAdmin() {
-        document.getElementById('panel-adm').classList.toggle('hidden');
-        document.getElementById('panel-hub').classList.toggle('hidden');
-    }
-
-    function loginAdmin() {
-        if(document.getElementById('adm-user').value === ADM_USER && document.getElementById('adm-pass').value === ADM_PASS) {
-            document.getElementById('adm-auth').classList.add('hidden');
-            document.getElementById('adm-content').classList.remove('hidden');
-        } else { alert("Acesso Negado!"); }
-    }
-
-    function gerarLinkMultiplo() {
-        const m = btoa(document.getElementById('membro-nome').value);
-        const l1 = btoa(document.getElementById('link-gen').value);
-        const l2 = btoa(document.getElementById('link-mm2').value);
-        const l3 = btoa(document.getElementById('link-tsunami').value);
-        const l4 = btoa(document.getElementById('link-brainrot').value);
-        const l5 = btoa(document.getElementById('link-blox').value);
-        const l6 = btoa(document.getElementById('link-robux').value);
-        const base = window.location.href.split('?')[0];
-        document.getElementById('final-url').innerText = `${base}?m=${m}&l1=${l1}&l2=${l2}&l3=${l3}&l4=${l4}&l5=${l5}&l6=${l6}`;
-    }
-</script>
 
 </body>
 </html>
